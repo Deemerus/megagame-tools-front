@@ -1,0 +1,45 @@
+<div class="container" *ngIf="clock">
+    <h1>Setup Games and Phases</h1>
+    <form>
+        <label>Turn Time (in minutes)</label>
+        <input 
+            class="turn-time" 
+            type="number" 
+            placeholder="Turn time in minutes"
+            [(ngModel)]="clock.turnTime"
+            name="turnTime">
+        <div class="button add-game" (click)="addGame()">Add game</div>
+        <div class="game" *ngFor="let game of clock.games">
+            <div class="game-name">
+                <label>Game Name</label>
+                <input
+                type="text" 
+                placeholder="Game Name"
+                [(ngModel)]="game.name"
+                name="game{{game.id.toString()}}">
+            </div>
+            <div class="button" (click)="addPhase(game)">Add Phase</div>
+            <div class="button remove" (click)="removeGame(game)">Remove Game</div>
+            <div class="phases">
+                <div class="phase" *ngFor="let phase of game.phases">
+                    <div class="phase-name">
+                        <label>Phase Name</label>
+                        <input type="text" 
+                        placeholder="Phase Name"
+                        [(ngModel)]="phase.name"
+                        name="game{{game.id.toString()}}phase{{phase.id.toString()}}name">
+                    </div>
+                    <div class="phase-end">
+                        <label>Minute the Phase ends</label>
+                        <input type="number" 
+                        placeholder="Minute the phase ends"
+                        [(ngModel)]="phase.end"
+                        name="game{{game.id.toString()}}phase{{phase.id.toString()}}end">
+                    </div>
+                    <div class="button remove" (click)="removePhase(game, phase)">X</div>
+                </div>
+            </div>
+        </div>
+        <div class="button" (click)="saveClock()">Save</div>
+    </form>
+</div>

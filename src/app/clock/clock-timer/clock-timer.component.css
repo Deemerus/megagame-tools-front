@@ -1,0 +1,26 @@
+div {
+    text-align: center;
+}
+
+h1 {
+    font-size: calc(min(55vh, 49vw));
+    padding: 0;
+    margin: auto;
+}
+
+h2 {
+    font-size : 15vmin;
+    padding: 0;
+    margin: auto;
+    color: rgb(187, 187, 187);
+}
+
+h3 {
+    font-size: calc(min(15vh, 12vw));
+    padding: 0;
+    margin: auto;
+}
+
+.red {
+    color: red;
+}

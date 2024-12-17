@@ -1,0 +1,7 @@
+<div *ngIf="game">
+    <h2 [class]="class">{{showTime(clock.timeRemaining)}}</h2>
+    <div *ngIf="game.phases[phaseIndex]">
+        <h3 [class]="class">{{game.phases[phaseIndex].name}}</h3>
+        <h1 [class]="class">{{showTime(phaseTimeLeft)}}</h1>
+    </div>
+</div>

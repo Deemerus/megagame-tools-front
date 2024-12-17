@@ -1,0 +1,18 @@
+<div class="container" *ngIf="clock">
+    <div class="button" (click)="editClock()">Edit</div>
+    <div class="button" (click)="startClock()">Start</div>
+    <h1>Turn Length: {{clock.turnTime}}</h1>
+    <h1>{{showTime(clock.timeRemaining)}}</h1>
+    <div class="game" *ngFor="let game of clock.games">
+        <div class="game-name">
+            <a [href]="getGameUrl(game.name)">{{game.name}}</a>
+        </div>
+        <div class="phases">
+            <div class="phase" *ngFor="let i = index; let phase of game.phases">
+                <div class="phase-name">
+                    <h3>{{phase.name}} ({{getPhaseStart(game.name, i)}} - {{phase.end}}min)</h3>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
