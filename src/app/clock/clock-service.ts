@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Clock } from "./clock-model";
 import { Subject } from "rxjs";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root',
@@ -11,8 +12,9 @@ export class ClockService {
     clock!: Clock;
     clockSub: Subject<Clock> = new Subject<Clock>();
     clockCreatedSub: Subject<string> = new Subject<string>();
+    errorMessage = '';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     getClockSub() {
         return this.clockSub.asObservable();
@@ -22,6 +24,10 @@ export class ClockService {
         return this.clockCreatedSub.asObservable();
     }
 
+    getErrorMessage() {
+        return this.errorMessage;
+    }
+
     createNewClock() {
         this.http.post<Clock>(this.BACKEND_URL + '/create', {}).subscribe(response => {
             if (response) {
@@ -29,11 +35,13 @@ export class ClockService {
             }
         }, error => {
             console.log(error);
+            this.errorMessage = "Error creating new clock";
+            this.router.navigate(['/clock']);
         });
     }
 
     getClock(id: string) {
-        if(id) {
+        if (id) {
             this.http.get<Clock>(this.BACKEND_URL + '/' + id).subscribe(response => {
                 if (response) {
                     this.clock = response;
@@ -42,6 +50,8 @@ export class ClockService {
                 }
             }, error => {
                 console.log(error);
+                this.errorMessage = "Couldn't find clock with id " + id;
+                this.router.navigate(['/clock']);
             });
         }
     }
@@ -55,6 +65,8 @@ export class ClockService {
             }
         }, error => {
             console.log(error);
+            this.errorMessage = "Couldn't find clock with id " + clock.id;
+            this.router.navigate(['/clock']);
         });
     }
 
@@ -66,6 +78,10 @@ export class ClockService {
                 this.clockSub.next(this.clock);
             }
         }, error => {
+            if (error.status == 404) {
+                this.errorMessage = "Couldn't find clock with id " + id;
+                this.router.navigate(['/clock']);
+            }
             console.log(error);
         });
     }

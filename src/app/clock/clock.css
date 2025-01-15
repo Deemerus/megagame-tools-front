@@ -145,3 +145,9 @@ h3 {
         width: 100%; /* Full width on small screens */
     }
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}

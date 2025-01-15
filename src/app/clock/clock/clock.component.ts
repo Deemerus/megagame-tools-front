@@ -14,8 +14,11 @@ import { Router } from '@angular/router';
 export class ClockComponent implements OnDestroy{
 
   clockSub: Subscription = new Subscription();
+  errorMessage = '';
   
-  constructor(private clockService : ClockService, private router : Router) {}
+  constructor(private clockService : ClockService, private router : Router) {
+    this.errorMessage = clockService.getErrorMessage();
+  }
   
   ngOnDestroy(): void {
     this.clockSub.unsubscribe();
