@@ -7,7 +7,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root',
 })
 export class ClockService {
-    BACKEND_URL = 'http://localhost:8080/clock';
+    BACKEND_URL = import.meta.env['NG_APP_BACKEND_URL'] + "/clock";
     clock!: Clock;
     clockSub: Subject<Clock> = new Subject<Clock>();
     clockCreatedSub: Subject<string> = new Subject<string>();
@@ -27,6 +27,8 @@ export class ClockService {
             if (response) {
                 this.clockCreatedSub.next(response.id);
             }
+        }, error => {
+            console.log(error);
         });
     }
 
@@ -38,6 +40,8 @@ export class ClockService {
                     this.assignIds(this.clock);
                     this.clockSub.next(this.clock);
                 }
+            }, error => {
+                console.log(error);
             });
         }
     }
@@ -49,6 +53,8 @@ export class ClockService {
                 this.assignIds(this.clock);
                 this.clockSub.next(this.clock);
             }
+        }, error => {
+            console.log(error);
         });
     }
 
@@ -59,6 +65,8 @@ export class ClockService {
                 this.assignIds(this.clock);
                 this.clockSub.next(this.clock);
             }
+        }, error => {
+            console.log(error);
         });
     }
 
